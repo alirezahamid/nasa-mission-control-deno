@@ -2,6 +2,7 @@ import { join } from "https://deno.land/std/path/mod.ts";
 import { BufReader } from "https://deno.land/std/io/bufio.ts";
 import { parse } from "https://deno.land/std/encoding/csv.ts";
 import * as _ from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
+import * as log from "https://deno.land/std/log/mod.ts";
 
 interface Planet {
   [key: string]: string;
@@ -23,6 +24,7 @@ export const filterHabitablePlanets = (planets: Array<Planet>) => {
 
 async function loadPlanetsData() {
   const path = join("data", "kepler-exoplanets-nasa.csv");
+
   const file = await Deno.open(path);
   const bufReader = new BufReader(file);
   const result = await parse(bufReader, {
@@ -45,7 +47,7 @@ async function loadPlanetsData() {
   });
 }
 planets = await loadPlanetsData();
-console.log(`${planets.length} habitable planets found!`);
+log.info(`${planets.length} habitable planets found!`);
 
 export const getAllPlanets = () => {
   return planets;
