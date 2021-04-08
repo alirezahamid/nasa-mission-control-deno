@@ -43,7 +43,7 @@ export const downloadLaunchData = async () => {
             customers: customers,
         }
         launches.set(flightData.flightNumber, flightData)
-        log.info(JSON.stringify(flightData))
+        // log.info(JSON.stringify(flightData))
     }
 }
     await downloadLaunchData()
@@ -58,4 +58,11 @@ export const getOne = (id: number) => {
         return launches.get(id)
     }
     return null
+}
+
+export const addOne = (data: Launch) => {
+    launches.set(data.flightNumber, Object.assign(data, {
+        upcoming: true,
+        customers: ["NASA", "Alireza"],
+    }))
 }

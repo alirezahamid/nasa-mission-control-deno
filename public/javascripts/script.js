@@ -31,7 +31,7 @@ function loadPlanets() {
   return fetch("/planets")
     .then((planetsResponse) => planetsResponse.json())
     .then((planets) => {
-      log.info(planets)
+      // log.info(planets)
       const planetSelector = document.getElementById("planets-selector")
       planets.forEach((planet) => {
         planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`
@@ -53,6 +53,23 @@ function submitLaunch() {
 
   // TODO: Once API is ready.
   // Submit above data to launch system and reload launches.
+    return fetch('/launches',{
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(({
+            launchDate: Math.floor(launchDate / 1000),
+            flightNumber,
+            mission,
+            rocket,
+            target
+        }))
+    })
+        .then(()=>{
+            document.getElementById("launch-success").hidden = false
+        })
+        .then(loadLaunches)
 }
 
 function listUpcoming() {
