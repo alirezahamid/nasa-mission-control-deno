@@ -59,6 +59,15 @@ export const getOne = (id: number) => {
     }
     return null
 }
+export const removeOne = (id: number) => {
+    const aborted = launches.get(id)
+    console.log(aborted)
+    if(aborted){
+        aborted.upcoming = false
+        aborted.success = false
+    }
+    return aborted
+}
 
 export const addOne = (data: Launch) => {
     launches.set(data.flightNumber, Object.assign(data, {
